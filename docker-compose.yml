@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+  nginx:
+    restart: always
+    build: docker/nginx
+    volumes:
+      - ./:/app
+    ports:
+      - 8793:8793
+    networks:
+      - api
+
+  php:
+    restart: always
+    build: docker/php
+    volumes:
+      - ./:/app
+    networks:
+      - api
+
+  mysql:
+    restart: always
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=32335804*
+      - MYSQL_DATABASE=sn-mechanics
+      - MYSQL_USER=arielnog
+      - MYSQL_PASSWORD=30145804*
+    volumes:
+      - mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - api
+
+  redis:
+    image: library/redis:alpine
+    networks:
+      - api
+
+volumes:
+  mysql:
+
+networks:
+  api:
