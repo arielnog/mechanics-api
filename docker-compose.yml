@@ -2,6 +2,7 @@ version: '2'
 
 services:
   nginx:
+    container_name: mechanics-server
     restart: always
     build: docker/nginx
     volumes:
@@ -11,15 +12,8 @@ services:
     networks:
       - api
 
-  php:
-    restart: always
-    build: docker/php
-    volumes:
-      - ./:/app
-    networks:
-      - api
-
   mysql:
+    container_name: mechanics-mysql
     restart: always
     image: mysql:latest
     environment:
@@ -35,9 +29,23 @@ services:
       - api
 
   redis:
+    container_name: mechanics-redis
     image: library/redis:alpine
     networks:
       - api
+
+  php:
+    container_name: mechanics-app
+    restart: always
+    build: docker/php
+    volumes:
+      - ./:/app
+    networks:
+      - api
+    depends_on:
+      - mechanics-server
+      - mechanics-mysql
+      - mechanics-redis
 
 volumes:
   mysql:
