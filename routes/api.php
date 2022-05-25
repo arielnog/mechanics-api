@@ -23,14 +23,15 @@ Route::post('/login', '\App\Http\Controllers\AuthController@login');
 Route::prefix('v1')->group(function () {
 
     Route::prefix('vehicles')->group(function () {
-        Route::get('/brand', '\App\Http\Controllers\VehicleController@listBrand');
-        Route::get('/{brandId}/model', '\App\Http\Controllers\VehicleController@listModel');
+        Route::get('/brands', '\App\Http\Controllers\VehicleController@getBrands');
+        Route::get('/{brandUuid}/model', '\App\Http\Controllers\VehicleController@listModel');
     });
 
     Route::prefix('mechanic')->group(function () {
         Route::get('/{mechanicUuid}', '\App\Http\Controllers\MechanicController@findByUuid');
         Route::post('/save', '\App\Http\Controllers\MechanicController@save');
         Route::put('/{mechanicUuid}/update', '\App\Http\Controllers\MechanicController@update');
+        Route::delete('/{mechanicUuid}/delete', '\App\Http\Controllers\MechanicController@update');
 
         Route::get('/{mechanicUuid}/clients', '\App\Http\Controllers\MechanicController@findByUuid');
     });

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\VehicleBrandService;
 use App\Services\VehicleService;
-use App\Services\VehicleModelService;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -20,13 +18,13 @@ class VehicleController extends Controller
         return $this->vehicleClientService->getVehiclesByClientId($request->query('clientValue'));
     }
 
-    public function listBrand()
+    public function getBrands()
     {
         return $this->vehicleClientService
             ->listAllBrand();
     }
 
-    public function listModel($brandId)
+    public function getModelByBrand($brandId)
     {
         return $this->vehicleClientService
             ->listAllModel($brandId);
